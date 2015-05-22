@@ -8,22 +8,30 @@ git clone https://github.com/cmonjeau/docker-lordec.git
 
 ### Build the dockerfile ###
 
-docker build -t cmonjeau/takeabreak .
+docker build -t cmonjeau/lordec .
 
 ### Print Lordec programs help ###
 
-docker run -it --rm cmonjeau/takeabreak lordec-stat
-docker run -it --rm cmonjeau/takeabreak	lordec-correct
-docker run -it --rm cmonjeau/takeabreak	lordec-trim
-docker run -it --rm cmonjeau/takeabreak	lordec-trim-split
-docker run -it --rm cmonjeau/takeabreak	lordec-build-SR-graph
+docker run -it --rm cmonjeau/lordec lordec-stat
+
+docker run -it --rm cmonjeau/lordec lordec-correct
+
+docker run -it --rm cmonjeau/lordec lordec-trim
+
+docker run -it --rm cmonjeau/lordec lordec-trim-split
+
+docker run -it --rm cmonjeau/lordec lordec-build-SR-graph
 
 ### Run Lordec programs with data (inside /home/user/Lordec directory)
 
 docker run -it --rm cmonjeau/lordec
-docker run -it --rm -v /home/user/Lordec:/data cmonjeau/lordec lordec-stat -i /data/pac-10Kl.fa -2 /data/rcc745-10K.fq -k 31 -s 1 -S /data/results/stat_file
-docker run -it --rm -v /home/user/Lordec:/data cmonjeau/lordec lordec-correct -i /data/pac-10Kl.fa -2 /data/rcc745-10K.fq -k 31 -s 1 -o /data/results/output_reads.fq
-docker run -it --rm -v /home/user/Lordec:/data cmonjeau/lordec lordec-trim -i /data/pac-10Kl.fa -o /data/results/output_trim.fa
-docker run -it --rm -v /home/user/Lordec:/data cmonjeau/lordec lordec-trim-split -i /data/pac-10Kl.fa -o /data/results/output_trim.fa
-docker run -it --rm -v /home/user/Lordec:/data cmonjeau/lordec lordec-build-SR-graph -2 /data/rcc745-10K.fq -k 31 -s 1 -g /data/results/output_graph
 
+docker run -it --rm -v /home/user/Lordec:/data cmonjeau/lordec lordec-stat -i /data/pac-10Kl.fa -2 /data/rcc745-10K.fq -k 31 -s 1 -S /data/results/stat_file
+
+docker run -it --rm -v /home/user/Lordec:/data cmonjeau/lordec lordec-correct -i /data/pac-10Kl.fa -2 /data/rcc745-10K.fq -k 31 -s 1 -o /data/results/output_reads.fq
+
+docker run -it --rm -v /home/user/Lordec:/data cmonjeau/lordec lordec-trim -i /data/pac-10Kl.fa -o /data/results/output_trim.fa
+
+docker run -it --rm -v /home/user/Lordec:/data cmonjeau/lordec lordec-trim-split -i /data/pac-10Kl.fa -o /data/results/output_trim.fa
+
+docker run -it --rm -v /home/user/Lordec:/data cmonjeau/lordec lordec-build-SR-graph -2 /data/rcc745-10K.fq -k 31 -s 1 -g /data/results/output_graph
