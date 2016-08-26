@@ -10,8 +10,8 @@ FROM debian:wheezy
 ENV DEBIAN_FRONTEND noninteractive
 ENV PACKAGES wget make cmake gcc g++ zlib1g-dev libboost-dev
 
-ENV TAR http://gatb-tools.gforge.inria.fr/versions/src/LoRDEC-0.5-Source.tar.gz
-ENV SOURCE LoRDEC-0.5-Source
+ENV TAR http://www.atgc-montpellier.fr/download/sources/lordec/LoRDEC-0.6.tar.gz
+ENV SOURCE LoRDEC-0.6
 ENV DIR /opt
 
 ################## DEPENDENCIES INSTALLATION ######################
@@ -23,12 +23,16 @@ RUN apt-get install -y ${PACKAGES}
 
 WORKDIR ${DIR}
 RUN wget ${TAR} -O - | tar xvzf -
-RUN mkdir ${DIR}/${SOURCE}/build
-WORKDIR ${DIR}/${SOURCE}/build
 
-RUN cmake ..
+WORKDIR ${DIR}/${SOURCE}
+RUN make install_dep
 RUN make
-RUN make install
+
+RUN ln -s ${DIR}/${SOURCE}/lordec-stat /usr/local/bin
+RUN ln -s ${DIR}/${SOURCE}/lordec-correct /usr/local/bin
+RUN ln -s ${DIR}/${SOURCE}/lordec-trim /usr/local/bin
+RUN ln -s ${DIR}/${SOURCE}/lordec-trim-split /usr/local/bin
+RUN ln -s ${DIR}/${SOURCE}/lordec-build-SR-graph /usr/local/bin
 
 ##################### Maintainer #####################
 

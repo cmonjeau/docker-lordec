@@ -35,3 +35,33 @@ docker run -it --rm -v /home/user/Lordec:/data cmonjeau/lordec lordec-trim -i /d
 docker run -it --rm -v /home/user/Lordec:/data cmonjeau/lordec lordec-trim-split -i /data/pac-10Kl.fa -o /data/results/output_trim.fa
 
 docker run -it --rm -v /home/user/Lordec:/data cmonjeau/lordec lordec-build-SR-graph -2 /data/rcc745-10K.fq -k 31 -s 1 -g /data/results/output_graph
+
+### Run Lordec using Godocker (http://www.genouest.org/godocker/)
+
+Create a new job with these parameters:
+
+"Container image" : cmonjeau/lordec
+
+"Command" :
+
+```
+
+#!/bin/bash
+
+# command line examples (adapt with your data)
+
+lordec-stat -i $GODOCKER_HOME/data/pac-10Kl.fa -2 $GODOCKER_HOME/data/rcc745-10K.fq -k 31 -s 1 -S $GODOCKER_HOME/data/results/stat_file
+
+lordec-correct -i $GODOCKER_HOME/data/pac-10Kl.fa -2 $GODOCKER_HOME/data/rcc745-10K.fq -k 31 -s 1 -o $GODOCKER_HOME/data/results/output_reads.fq
+
+lordec-trim -i $GODOCKER_HOME/data/pac-10Kl.fa -o $GODOCKER_HOME/data/results/output_trim.fa
+
+lordec-trim-split -i $GODOCKER_HOME/data/pac-10Kl.fa -o $GODOCKER_HOME/data/results/output_trim.fa
+
+lordec-build-SR-graph -2 $GODOCKER_HOME/data/rcc745-10K.fq -k 31 -s 1 -g $GODOCKER_HOME/data/results/output_graph
+
+
+```
+
+"Mount volumes" : home(rw)
+
